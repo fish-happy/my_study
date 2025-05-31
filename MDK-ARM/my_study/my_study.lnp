@@ -1,0 +1,23 @@
+--cpu Cortex-M3
+"my_study\startup_stm32f103xb.o"
+"my_study\main.o"
+"my_study\gpio.o"
+"my_study\dma.o"
+"my_study\i2c.o"
+"my_study\spi.o"
+"my_study\usart.o"
+"my_study\stm32f1xx_it.o"
+"my_study\stm32f1xx_ll_gpio.o"
+"my_study\stm32f1xx_ll_dma.o"
+"my_study\stm32f1xx_ll_i2c.o"
+"my_study\stm32f1xx_ll_rcc.o"
+"my_study\stm32f1xx_ll_utils.o"
+"my_study\stm32f1xx_ll_exti.o"
+"my_study\stm32f1xx_ll_spi.o"
+"my_study\stm32f1xx_ll_pwr.o"
+"my_study\stm32f1xx_ll_usart.o"
+"my_study\system_stm32f1xx.o"
+--strict --scatter "my_study\my_study.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "my_study.map" -o my_study\my_study.axf

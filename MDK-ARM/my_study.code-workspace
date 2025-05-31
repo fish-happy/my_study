@@ -1,0 +1,13 @@
+{
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "name": "my_study",
+            "path": ".."
+        }
+    ],
+    "settings": {},
+    "extensions": {}
+}

@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"oled091.h": "c",
+			"usart.h": "c",
+			"i2c.h": "c",
+			"dma.h": "c",
+			"main.h": "c"
+		}
+	}
+}
