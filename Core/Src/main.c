@@ -24,8 +24,13 @@
 #include "usart.h"
 #include "gpio.h"
 
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+
+
+
 
 /* USER CODE END Includes */
 
@@ -58,6 +63,7 @@ void SystemClock_Config (void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
 
 /* USER CODE END 0 */
 
@@ -110,14 +116,16 @@ int main (void)
   //测试串口重定向 显示系统主频
   USART2_Redirected_test ( );
 
-  my_OLED091_Init ( );
+  //my_OLED091_Init ( );
 
+ 
 
-    
-  
-  
-  
-  
+  my_AT24C16_WriteByte (204 , AT24C16_DEVICE_PAGE_ADDR (3) , 254);
+  uint8_t temp = 0;
+  my_AT24C16_RedaData (&temp , 1 , AT24C16_DEVICE_PAGE_ADDR (3) , 254);
+
+  printf ("temp = %d\r\n" , temp);
+
 
   /* USER CODE END 2 */
 
@@ -126,16 +134,16 @@ int main (void)
   while (1)
   {
     /* USER CODE END WHILE */
-    
 
-   
+
+
     //板载灯300ms(1/1000s)开关切换
 
-    
 
 
 
-   
+
+
     /* USER CODE BEGIN 3 */
 
   }

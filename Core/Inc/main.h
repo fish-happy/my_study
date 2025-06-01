@@ -16,9 +16,9 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
+  /* USER CODE END Header */
 
-/* Define to prevent recursive inclusion -------------------------------------*/
+  /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __MAIN_H
 #define __MAIN_H
 
@@ -26,7 +26,7 @@
 extern "C" {
 #endif
 
-/* Includes ------------------------------------------------------------------*/
+  /* Includes ------------------------------------------------------------------*/
 
 #include "stm32f1xx_ll_dma.h"
 #include "stm32f1xx_ll_i2c.h"
@@ -59,15 +59,12 @@ extern "C" {
 #include <time.h>
 #include <assert.h> 
 
+
+  
 /*my drivers*/
 #include "my_OLED091.h"
 #include "my_LEDdebug.h"
-
-#include "dma.h"
-#include "i2c.h"
-#include "spi.h"
-#include "usart.h"
-#include "gpio.h"
+#include "my_at24c16.h"
 
 
 
@@ -89,13 +86,13 @@ extern "C" {
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
-void Error_Handler(void);
+  void Error_Handler (void);
 
-/* USER CODE BEGIN EFP */
+  /* USER CODE BEGIN EFP */
 
-/* USER CODE END EFP */
+  /* USER CODE END EFP */
 
-/* Private defines -----------------------------------------------------------*/
+  /* Private defines -----------------------------------------------------------*/
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
                                                                  4 bits for subpriority */
@@ -109,9 +106,9 @@ void Error_Handler(void);
                                                                  0 bit  for subpriority */
 #endif
 
-/* USER CODE BEGIN Private defines */
+                                                                 /* USER CODE BEGIN Private defines */
 
-/* USER CODE END Private defines */
+                                                                 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

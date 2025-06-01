@@ -16,8 +16,8 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
-/* Define to prevent recursive inclusion -------------------------------------*/
+  /* USER CODE END Header */
+  /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __I2C_H__
 #define __I2C_H__
 
@@ -25,7 +25,7 @@
 extern "C" {
 #endif
 
-/* Includes ------------------------------------------------------------------*/
+  /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
@@ -36,29 +36,27 @@ extern "C" {
 
 /* USER CODE END Private defines */
 
-void MX_I2C2_Init(void);
+  void MX_I2C2_Init (void);
 
-/* USER CODE BEGIN Prototypes */
-
-
-
- /*I2C的普通传输*/
-
-ErrorStatus my_I2C_ReceiveData (I2C_TypeDef * I2Cx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr , uint8_t reg_addr);
-
-ErrorStatus my_I2C_TransmitData (I2C_TypeDef * I2Cx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr , uint8_t reg_addr);
+  /* USER CODE BEGIN Prototypes */
 
 
 
-/*I2C的DMA传输*/
+   /*I2C的普通传输*/
+
+  ErrorStatus my_I2C_ReceiveData (I2C_TypeDef * I2Cx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr , uint8_t reg_addr);
+
+  ErrorStatus my_I2C_TransmitData (I2C_TypeDef * I2Cx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr , uint8_t reg_addr);
 
 
-ErrorStatus my_I2C_DMA_TransmitData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , uint32_t CHx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr);
+
+  /*I2C的DMA传输*/
 
 
-ErrorStatus my_I2C_DMA_ReceiveData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , uint32_t CHx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr);
+  ErrorStatus my_I2C_DMA_TransmitData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , uint32_t CHx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr);
 
 
+  ErrorStatus my_I2C_DMA_ReceiveData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , uint32_t CHx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr , uint8_t reg_addr);
 
 
 
@@ -71,7 +69,9 @@ ErrorStatus my_I2C_DMA_ReceiveData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , ui
 
 
 
-/* USER CODE END Prototypes */
+
+
+  /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }

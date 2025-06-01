@@ -53,6 +53,9 @@
                   },
                   {
                     "path": "../Core/Src/my_OLED091.c"
+                  },
+                  {
+                    "path": "../Core/Src/my_at24c16.c"
                   }
                 ],
                 "folders": []
