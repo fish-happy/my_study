@@ -118,21 +118,24 @@ int main (void)
 
   //my_OLED091_Init ( );
 
-  uint8_t temp[256] = { 0 };
+  uint8_t temp[1024] = { 0 };
 
-  memset (temp , 55 , 256);
+  memset (temp , 161 , 1024);
 
-  my_AT24C16_DMA_WriteData (temp , 16 , AT24C16_DEVICE_PAGE_ADDR (3) , 0x20);
-
-
+  my_AT24C16_DMA_WriteData (temp , 1024 , AT24C16_DEVICE_PAGE_ADDR (0) , 0x00);
 
 
 
-  my_AT24C16_DMA_RedaData (temp , 16 , AT24C16_DEVICE_PAGE_ADDR (3) , 0x20);
 
-  for (int i = 0; i < 16; i++)
+
+  my_AT24C16_DMA_RedaData (temp , 1024 , AT24C16_DEVICE_PAGE_ADDR (0) , 0x00);
+
+  for (int i = 0; i < 1024; i++)
   {
-    printf ("temp[%d] = %d\r\n" , i , temp[i]);
+    USART2->DR = temp[i];
+    
+    while (!LL_USART_IsActiveFlag_TXE (USART2));
+  
   }
 
 
@@ -148,7 +151,7 @@ int main (void)
 
 
 
-    //板载灯300ms(1/1000s)开关切换
+    //板载灯1024ms(1/1000s)开关切换
 
 
 
@@ -220,7 +223,7 @@ void Error_Handler (void)
     //重启I2C
     LL_I2C_Disable (I2C2);
     LL_I2C_Enable (I2C2);
-    
+
   }
 
 
@@ -230,8 +233,8 @@ void Error_Handler (void)
   while (1)
   {
     my_Onboard_LED_msToggle (500);
-    LL_mDelay (3000);
-   
+    LL_mDelay (10240);
+
   }
   /* USER CODE END Error_Handler_Debug */
 }
