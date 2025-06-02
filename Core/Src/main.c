@@ -118,19 +118,19 @@ int main (void)
 
   //my_OLED091_Init ( );
 
-  uint8_t temp[128] = { 0 };
+  uint8_t temp[256] = { 0 };
 
-  memset (temp , 201 , 128);
+  memset (temp , 55 , 256);
 
-  my_AT24C16_DMA_WriteData (temp , 17 , AT24C16_DEVICE_PAGE_ADDR (3) , 0x00);
-
-
+  my_AT24C16_DMA_WriteData (temp , 16 , AT24C16_DEVICE_PAGE_ADDR (3) , 0x20);
 
 
 
-  my_AT24C16_DMA_RedaData (temp , 16 , AT24C16_DEVICE_PAGE_ADDR (3) , 0x30);
 
-  for (int i = 0; i < 17; i++)
+
+  my_AT24C16_DMA_RedaData (temp , 16 , AT24C16_DEVICE_PAGE_ADDR (3) , 0x20);
+
+  for (int i = 0; i < 16; i++)
   {
     printf ("temp[%d] = %d\r\n" , i , temp[i]);
   }
@@ -211,10 +211,27 @@ void SystemClock_Config (void)
 void Error_Handler (void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
+  if ((I2C2->SR1 & I2C_SR1_TIMEOUT) || (I2C2->SR2 & LL_I2C_SR1_BERR))
+  {
+
+
+    //发送停止信号
+    LL_I2C_GenerateStopCondition (I2C2);
+    //重启I2C
+    LL_I2C_Disable (I2C2);
+    LL_I2C_Enable (I2C2);
+    
+  }
+
+
+
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq ( );
   while (1)
   {
+    my_Onboard_LED_msToggle (500);
+    LL_mDelay (3000);
+   
   }
   /* USER CODE END Error_Handler_Debug */
 }

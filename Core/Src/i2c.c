@@ -109,45 +109,29 @@ void MX_I2C2_Init (void)
 /*static 函数部分*/
 
 //发送起始条件,并检测,超时则重启I2C,并返回错误
-__STATIC_INLINE ErrorStatus my_I2C2_GenerateStartCondition_Check (I2C_TypeDef * I2Cx)
+__STATIC_INLINE void my_I2C2_GenerateStartCondition_Check (I2C_TypeDef * I2Cx)
 {
   LL_I2C_GenerateStartCondition (I2Cx);
-  while (!LL_I2C_IsActiveFlag_SB (I2Cx))
-  {
-    if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-    {
-      //重启I2C
-      LL_I2C_Disable (I2Cx);
-      LL_I2C_Enable (I2Cx);
-      return ERROR; //超时退出
-    }
-  }
-  return SUCCESS;
+  while (!LL_I2C_IsActiveFlag_SB (I2Cx));
 }
 
+
+
 //发送从机地址,并检测,同时清除addr标志位,超时则重启I2C,并返回错误,rw为读写标志位,0为写,1为读
-__STATIC_INLINE ErrorStatus my_I2C2_TransmitAddress_Check (I2C_TypeDef * I2Cx , uint8_t addr , uint8_t rw)
+__STATIC_INLINE void my_I2C2_TransmitAddress_Check (I2C_TypeDef * I2Cx , uint8_t addr , uint8_t rw)
 {
   LL_I2C_TransmitData8 (I2Cx , addr | rw);  //发送从机地址
-  while (!LL_I2C_IsActiveFlag_ADDR (I2Cx))
-  {
-    if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-    {
-      //重启I2C
-      LL_I2C_Disable (I2Cx);
-      LL_I2C_Enable (I2Cx);
-      return ERROR; //超时退出
-    }
-  }
+
+  while (!LL_I2C_IsActiveFlag_ADDR (I2Cx));
   LL_I2C_ClearFlag_ADDR (I2Cx);
-  return SUCCESS;
+
 }
 
 
 
 
 //发送寄存器地址和发送数据,并检测,超时则重启I2C,并返回错误
-__STATIC_INLINE ErrorStatus my_I2C2_TransmitData_Check (I2C_TypeDef * I2Cx , uint8_t reg_addr , uint8_t * p_data , uint32_t len)
+__STATIC_INLINE void my_I2C2_TransmitData_Check (I2C_TypeDef * I2Cx , uint8_t reg_addr , uint8_t * p_data , uint32_t len)
 {
 
 
@@ -157,53 +141,24 @@ __STATIC_INLINE ErrorStatus my_I2C2_TransmitData_Check (I2C_TypeDef * I2Cx , uin
   for (uint16_t i = 0; i < len; i++)
   {
 
-    while (!LL_I2C_IsActiveFlag_TXE (I2Cx))
-    {
-      if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-      {
-        //重启I2C
-        LL_I2C_Disable (I2Cx);
-        LL_I2C_Enable (I2Cx);
-        return ERROR; //超时退出
-      }
-    }
-
-
+    while (!LL_I2C_IsActiveFlag_TXE (I2Cx));
     LL_I2C_TransmitData8 (I2Cx , p_data[i]);  //发送数据
 
   }
 
-  while (!LL_I2C_IsActiveFlag_BTF (I2Cx))
-  {
-    if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-    {
-      //重启I2C
-      LL_I2C_Disable (I2Cx);
-      LL_I2C_Enable (I2Cx);
-      return ERROR; //超时退出
-    }
-  }
+  while (!LL_I2C_IsActiveFlag_BTF (I2Cx));
 
   //BTF位可以不必手动清除,在stop信号发送成功以后,会自动清除BTF位
-  return SUCCESS;
+
 
 }
 
 //发送停止信号,并检测,超时则重启I2C,并返回错误
-__STATIC_INLINE ErrorStatus my_I2C2_GenerateStopCondition_Check (I2C_TypeDef * I2Cx)
+__STATIC_INLINE void my_I2C2_GenerateStopCondition_Check (I2C_TypeDef * I2Cx)
 {
   LL_I2C_GenerateStopCondition (I2Cx);
-  while (LL_I2C_IsActiveFlag_BUSY (I2Cx))
-  {
-    if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-    {
-      //重启I2C
-      LL_I2C_Disable (I2Cx);
-      LL_I2C_Enable (I2Cx);
-      return ERROR; //超时退出
-    }
-  }
-  return SUCCESS;
+  while (LL_I2C_IsActiveFlag_BUSY (I2Cx));
+
 }
 
 
@@ -230,12 +185,6 @@ __STATIC_INLINE  void my_I2C_DMA_Enable (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx
 }
 
 /// @brief I2C的DMA发送配置
-/// @note  配置I2C的DMA的源地址和目标地址以及数据长度
-/// @param I2Cx I2C实例
-/// @param DMAx DMA实例
-/// @param CHx 通道号
-/// @param p_buf 数据缓冲区的指针
-/// @param len 数据长度
 __STATIC_INLINE void my_I2C_DMA_BufferConfig (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , uint32_t CHx , uint8_t * p_buf , uint32_t len)
 {
 
@@ -258,88 +207,8 @@ __STATIC_INLINE void my_I2C_DMA_BufferConfig (I2C_TypeDef * I2Cx , DMA_TypeDef *
 }
 
 
-/// @brief 轮询DMA的TC标志位等待DMA数据传输完成,轮询I2C的BTF标志位等待I2C数据传输完成,并清除DMA的TC标志位,超时则重启I2C,并返回错误
-/// @param DMAx 实例
-/// @param I2Cx 实例
-__STATIC_INLINE ErrorStatus my_I2C_DMA_WiatTransmitComplete (DMA_TypeDef * DMAx , I2C_TypeDef * I2Cx)
-{
-  // 等待 DMA完成传送
-  while (!LL_DMA_IsActiveFlag_TC4 (DMAx))
-  {
-
-    if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-    {
-      //重启I2C
-      LL_I2C_Disable (I2Cx);
-      LL_I2C_Enable (I2Cx);
-      return ERROR; //超时退出
-
-    }
-
-  }
 
 
-
-  //检测I2C最后一个字节是否发送完成
-  while (!LL_I2C_IsActiveFlag_BTF (I2Cx))
-  {
-
-    if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-    {
-      //重启I2C
-      LL_I2C_Disable (I2Cx);
-      LL_I2C_Enable (I2Cx);
-      return ERROR; //超时退出
-    }
-
-  }
-
-  //注意:BTF标志位在STOP信号产生以后,会自动被清除
-
-  //清除DMA的TC标志位
-  LL_DMA_ClearFlag_TC4 (DMAx);
-
-  return SUCCESS;
-}
-
-
-
-
-
-
-
-
-// /// @brief 轮询DMA的TC标志位等待DMA数据接收完成,并清除DMA的TC标志位,超时则重启I2C,并返回错误
-// /// @param DMAx 实例
-// /// @param I2Cx 实例
-// __STATIC_INLINE ErrorStatus my_I2C_DMA_WiatReceiveComplete (DMA_TypeDef * DMAx , I2C_TypeDef * I2Cx)
-// {
-//   // 等待 DMA完成传送
-//   while (!LL_DMA_IsActiveFlag_TC4 (DMAx))
-//   {
-
-//     my_Onboard_LED_switch (1);
-
-//     if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-//     {
-//       //重启I2C
-//       LL_I2C_Disable (I2Cx);
-//       LL_I2C_Enable (I2Cx);
-//       return ERROR; //超时退出
-
-//     }
-
-//   }
-
-//   //清除DMA的TC标志位
-//   LL_DMA_ClearFlag_TC4 (DMAx);
-
-
-//   LL_I2C_DisableLastDMA (I2Cx);  // 显式关闭LAST（可选但推荐）
-
-
-//   return SUCCESS;
-// }
 
 
 
@@ -372,9 +241,6 @@ ErrorStatus my_I2C_TransmitData (I2C_TypeDef * I2Cx , uint8_t * p_buf , uint32_t
   my_I2C2_TransmitAddress_Check (I2Cx , slave_addr , 0);
 
   //在清除addr标志位以后,TxE和BTF位置位,可以直接发送寄存器地址
-
-
-
   my_I2C2_TransmitData_Check (I2Cx , reg_addr , p_buf , len);
 
   my_I2C2_GenerateStopCondition_Check (I2Cx);
@@ -386,12 +252,6 @@ ErrorStatus my_I2C_TransmitData (I2C_TypeDef * I2Cx , uint8_t * p_buf , uint32_t
 
 
 /// @brief I2C接收数据
-/// @param I2Cx 实例
-/// @param p_buf 接收数据缓冲区指针
-/// @param len 接收数据长度
-/// @param slave_addr 从机地址
-/// @param reg_addr 寄存器地址
-/// @return 0=success:成功,1=error:失败
 ErrorStatus my_I2C_ReceiveData (I2C_TypeDef * I2Cx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr , uint8_t reg_addr)
 {
 
@@ -405,17 +265,7 @@ ErrorStatus my_I2C_ReceiveData (I2C_TypeDef * I2Cx , uint8_t * p_buf , uint32_t 
   LL_I2C_TransmitData8 (I2Cx , reg_addr);
 
   //检测是否发送完毕
-  while (!LL_I2C_IsActiveFlag_BTF (I2Cx))
-  {
-    if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-    {
-      //重启I2C
-      LL_I2C_Disable (I2Cx);
-      LL_I2C_Enable (I2Cx);
-      return ERROR; //超时退出
-    }
-  }
-
+  while (!LL_I2C_IsActiveFlag_BTF (I2Cx));
 
 
   //发送重复起始条件,并检测,超时则重启I2C,并返回错误
@@ -435,33 +285,14 @@ ErrorStatus my_I2C_ReceiveData (I2C_TypeDef * I2Cx , uint8_t * p_buf , uint32_t 
       LL_I2C_AcknowledgeNextData (I2Cx , LL_I2C_NACK);
       LL_I2C_GenerateStopCondition (I2Cx);
     }
-    while (!LL_I2C_IsActiveFlag_RXNE (I2Cx))
-    {
-      if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-      {
-        //重启I2C
-        LL_I2C_Disable (I2Cx);
-        LL_I2C_Enable (I2Cx);
-        return ERROR; //超时退出
-      }
-    }
+    while (!LL_I2C_IsActiveFlag_RXNE (I2Cx));
+
     p_buf[i] = LL_I2C_ReceiveData8 (I2Cx);  //接收数据
   }
 
 
   //检测空闲标志位,超时则重启I2C,并返回错误
-  while (!LL_I2C_IsActiveFlag_BUSY (I2Cx))
-  {
-    if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-    {
-      //重启I2C
-      LL_I2C_Disable (I2Cx);
-      LL_I2C_Enable (I2Cx);
-      return ERROR; //超时退出
-    }
-  }
-
-
+  while (!LL_I2C_IsActiveFlag_BUSY (I2Cx));
 
   //使能应答位,准备下一次接收
   LL_I2C_AcknowledgeNextData (I2Cx , LL_I2C_ACK);
@@ -489,52 +320,31 @@ ErrorStatus my_I2C_ReceiveData (I2C_TypeDef * I2Cx , uint8_t * p_buf , uint32_t 
 /*I2C的DMA发送*/
 
 
-
-
-/// @brief I2C的DMA发送数据
-/// @param I2Cx 实例
-/// @param DMAx 实例
-/// @param CHx 通道号
-/// @param p_buf 数据缓冲区指针
-/// @param len 数据长度
-/// @param slave_addr 从机地址
-/// @return 0=success:成功,1=error:失败
+///I2C的DMA发送数据
 ErrorStatus my_I2C_DMA_TransmitData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , uint32_t CHx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr , uint8_t reg_addr)
 {
 
   //配置DMA的目标地址和源地址及其长度
   my_I2C_DMA_BufferConfig (I2Cx , DMAx , CHx , p_buf , len);
-
-  //使能DMA请求,启动DMA传输
-  my_I2C_DMA_Enable (I2Cx , DMAx , CHx);
-
   // 发送起始条件
   my_I2C2_GenerateStartCondition_Check (I2Cx);
+  LL_I2C_TransmitData8 (I2Cx , slave_addr);  //发送从机地址
+  while (!LL_I2C_IsActiveFlag_ADDR (I2Cx));//检测addr是否置位
+  LL_I2C_ClearFlag_ADDR (I2Cx);//清除addr标志位
+  LL_I2C_TransmitData8 (I2Cx , reg_addr); //发送寄存器地址
 
-  //发送从机地址,清除addr标志位
-  my_I2C2_TransmitAddress_Check (I2Cx , slave_addr , 0);
+  //特别注意:DMA如果在寄存器地址发送之前打开,会导致寄存器地址丢失,
+  //所以必须在寄存器地址发送之后打开DMA
+  my_I2C_DMA_Enable (I2Cx , DMAx , CHx);//使能DMA请求,启动DMA传输
 
-  //发送寄存器地址
-  LL_I2C_TransmitData8 (I2Cx , reg_addr);
+  while (!LL_DMA_IsActiveFlag_TC4 (DMAx));  // 等待 DMA完成传送
+  while (!LL_I2C_IsActiveFlag_BTF (I2Cx));//检测I2C最后一个字节是否发送完成
+  LL_DMA_ClearFlag_TC4 (DMAx);//清除DMA的TC标志位
 
-  //检测是否发送完毕
-  while (!LL_I2C_IsActiveFlag_BTF (I2Cx))
-  {
-    if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-    {
-      //重启I2C
-      LL_I2C_Disable (I2Cx);
-      LL_I2C_Enable (I2Cx);
-      return ERROR; //超时退出
-    }
-  }
+  //注意:BTF标志位在STOP信号产生以后,会自动被清除
 
-  //等待DMA传输完成
-  my_I2C_DMA_WiatTransmitComplete (DMAx , I2Cx);
-
-  //发送停止位
+   //发送停止位
   my_I2C2_GenerateStopCondition_Check (I2Cx);
-
   my_I2C_DMA_Disabled (I2Cx , DMAx , CHx);
 
   return SUCCESS;
@@ -550,17 +360,11 @@ ErrorStatus my_I2C_DMA_TransmitData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , u
 ErrorStatus my_I2C_DMA_ReceiveData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , uint32_t CHx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr , uint8_t reg_addr)
 {
 
-
-  
   //配置DMA的目标地址和源地址及其长度
   my_I2C_DMA_BufferConfig (I2Cx , DMAx , CHx , p_buf , len);
 
-
   //启用last模式
-
   LL_I2C_EnableLastDMA (I2Cx);
-
-
 
   //使能DMA请求,启动DMA传输
   my_I2C_DMA_Enable (I2Cx , DMAx , CHx);
@@ -575,42 +379,11 @@ ErrorStatus my_I2C_DMA_ReceiveData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , ui
   LL_I2C_TransmitData8 (I2Cx , reg_addr);
 
   //检测是否发送完毕
-  while (!LL_I2C_IsActiveFlag_BTF (I2Cx))
-  {
-    if (I2Cx->SR1 & I2C_SR1_TIMEOUT)
-    {
-      //重启I2C
-      LL_I2C_Disable (I2Cx);
-      LL_I2C_Enable (I2Cx);
-      return ERROR; //超时退出
-    }
-  }
-
-  
-
-
-
-  
-
-
-  
-  
-  
-  
-
-
-  
-  
-  
-  
-  
-  
-  
+  while (!LL_I2C_IsActiveFlag_BTF (I2Cx));
 
   //发送重复起始条件,并检测,超时则重启I2C,并返回错误
   my_I2C2_GenerateStartCondition_Check (I2Cx);
 
- 
 
   //发送从机地址(读模式,读写标志位为1),并检测,同时清除addr标志位,超时则重启I2C,并返回错误
 
@@ -629,7 +402,7 @@ ErrorStatus my_I2C_DMA_ReceiveData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , ui
   LL_I2C_AcknowledgeNextData (I2Cx , LL_I2C_ACK);
 
   //LL_I2C_DisableLastDMA (I2Cx);  // 显式关闭LAST（可选但推荐）
-  
+
   return SUCCESS;
 }
 
