@@ -21,10 +21,11 @@ ErrorStatus my_AT24C16_WriteData (uint8_t * p_data , uint32_t len , uint8_t Page
 ErrorStatus my_AT24C16_RedaData (uint8_t * p_buf , uint32_t len , uint8_t Page_addr , uint8_t mem_addr);
 
 
+ErrorStatus my_AT24C16_DMA_WriteData (uint8_t * p_data , uint32_t len , uint8_t Page_addr , uint8_t mem_addr);
 
 
 
-
+ErrorStatus my_AT24C16_DMA_RedaData (uint8_t * p_buf , uint32_t len , uint8_t Page_addr , uint8_t mem_addr);
 
 
 

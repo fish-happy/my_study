@@ -66,7 +66,11 @@ extern "C" {
 #include "my_LEDdebug.h"
 #include "my_at24c16.h"
 
-
+#include "dma.h"
+#include "i2c.h"
+#include "spi.h"
+#include "usart.h"
+#include "gpio.h"
 
 /* USER CODE END Includes */
 

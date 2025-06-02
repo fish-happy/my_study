@@ -243,7 +243,10 @@ void DMA1_Channel4_IRQHandler(void)
 void DMA1_Channel5_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Channel5_IRQn 0 */
-
+  
+  //清除DMA的TC标志位
+ 
+ 
   /* USER CODE END DMA1_Channel5_IRQn 0 */
   /* USER CODE BEGIN DMA1_Channel5_IRQn 1 */
 

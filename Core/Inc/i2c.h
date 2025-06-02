@@ -53,7 +53,7 @@ extern "C" {
   /*I2C的DMA传输*/
 
 
-  ErrorStatus my_I2C_DMA_TransmitData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , uint32_t CHx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr);
+  ErrorStatus my_I2C_DMA_TransmitData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , uint32_t CHx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr , uint8_t reg_addr);
 
 
   ErrorStatus my_I2C_DMA_ReceiveData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , uint32_t CHx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr , uint8_t reg_addr);

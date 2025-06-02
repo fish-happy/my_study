@@ -118,13 +118,24 @@ int main (void)
 
   //my_OLED091_Init ( );
 
- 
+  uint8_t temp[128] = { 0 };
 
-  my_AT24C16_WriteByte (204 , AT24C16_DEVICE_PAGE_ADDR (3) , 254);
-  uint8_t temp = 0;
-  my_AT24C16_RedaData (&temp , 1 , AT24C16_DEVICE_PAGE_ADDR (3) , 254);
+  memset (temp , 201 , 128);
 
-  printf ("temp = %d\r\n" , temp);
+  my_AT24C16_DMA_WriteData (temp , 17 , AT24C16_DEVICE_PAGE_ADDR (3) , 0x00);
+
+
+
+
+
+  my_AT24C16_DMA_RedaData (temp , 16 , AT24C16_DEVICE_PAGE_ADDR (3) , 0x30);
+
+  for (int i = 0; i < 17; i++)
+  {
+    printf ("temp[%d] = %d\r\n" , i , temp[i]);
+  }
+
+
 
 
   /* USER CODE END 2 */
