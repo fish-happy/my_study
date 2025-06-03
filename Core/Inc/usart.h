@@ -36,11 +36,7 @@ extern "C" {
 
 /* USER CODE END Private defines */
 
-  
-
 void MX_USART2_UART_Init(void);
-
-
 
 /* USER CODE BEGIN Prototypes */
 __STATIC_INLINE void USART2_Redirected_test (void)

@@ -16,9 +16,9 @@
   *
   ******************************************************************************
   */
-  /* USER CODE END Header */
+/* USER CODE END Header */
 
-  /* Define to prevent recursive inclusion -------------------------------------*/
+/* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __MAIN_H
 #define __MAIN_H
 
@@ -26,7 +26,7 @@
 extern "C" {
 #endif
 
-  /* Includes ------------------------------------------------------------------*/
+/* Includes ------------------------------------------------------------------*/
 
 #include "stm32f1xx_ll_dma.h"
 #include "stm32f1xx_ll_i2c.h"
@@ -90,13 +90,13 @@ extern "C" {
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
-  void Error_Handler (void);
+void Error_Handler(void);
 
-  /* USER CODE BEGIN EFP */
+/* USER CODE BEGIN EFP */
 
-  /* USER CODE END EFP */
+/* USER CODE END EFP */
 
-  /* Private defines -----------------------------------------------------------*/
+/* Private defines -----------------------------------------------------------*/
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
                                                                  4 bits for subpriority */
@@ -110,9 +110,9 @@ extern "C" {
                                                                  0 bit  for subpriority */
 #endif
 
-                                                                 /* USER CODE BEGIN Private defines */
+/* USER CODE BEGIN Private defines */
 
-                                                                 /* USER CODE END Private defines */
+/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

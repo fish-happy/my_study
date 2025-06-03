@@ -24,7 +24,6 @@
 #include "usart.h"
 #include "gpio.h"
 
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -119,23 +118,13 @@ int main (void)
   //my_OLED091_Init ( );
 
   uint8_t temp[1024] = { 0 };
-
-  memset (temp , 161 , 1024);
-
+  memset (temp , 160 , 1024);
   my_AT24C16_DMA_WriteData (temp , 1024 , AT24C16_DEVICE_PAGE_ADDR (0) , 0x00);
-
-
-
-
-
   my_AT24C16_DMA_RedaData (temp , 1024 , AT24C16_DEVICE_PAGE_ADDR (0) , 0x00);
 
   for (int i = 0; i < 1024; i++)
   {
-    USART2->DR = temp[i];
-    
-    while (!LL_USART_IsActiveFlag_TXE (USART2));
-  
+    printf ("temp[%d]=%d " , i , temp[i]);
   }
 
 
@@ -148,15 +137,6 @@ int main (void)
   while (1)
   {
     /* USER CODE END WHILE */
-
-
-
-    //板载灯1024ms(1/1000s)开关切换
-
-
-
-
-
 
     /* USER CODE BEGIN 3 */
 

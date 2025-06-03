@@ -59,11 +59,6 @@ ErrorStatus my_AT24C16_DMA_WriteData (uint8_t * p_data , uint32_t len , uint8_t 
         }
 
     }
-
-
-
-
-
     return status;
 }
 

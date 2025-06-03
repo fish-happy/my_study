@@ -16,8 +16,8 @@
   *
   ******************************************************************************
   */
-  /* USER CODE END Header */
-  /* Define to prevent recursive inclusion -------------------------------------*/
+/* USER CODE END Header */
+/* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __I2C_H__
 #define __I2C_H__
 
@@ -25,7 +25,7 @@
 extern "C" {
 #endif
 
-  /* Includes ------------------------------------------------------------------*/
+/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
@@ -38,11 +38,11 @@ extern "C" {
  
  
 
-    /* USER CODE END Private defines */
+/* USER CODE END Private defines */
 
-    void MX_I2C2_Init (void);
+void MX_I2C2_Init(void);
 
-  /* USER CODE BEGIN Prototypes */
+/* USER CODE BEGIN Prototypes */
 
 
 
@@ -75,7 +75,7 @@ extern "C" {
 
 
 
-  /* USER CODE END Prototypes */
+/* USER CODE END Prototypes */
 
 #ifdef __cplusplus
 }
