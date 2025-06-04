@@ -65,7 +65,9 @@ extern "C" {
 #include "my_OLED091.h"
 #include "my_LEDdebug.h"
 #include "my_at24c16.h"
+#include  "my_at24c256.h"
 
+  
 #include "dma.h"
 #include "i2c.h"
 #include "spi.h"

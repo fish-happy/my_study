@@ -36,18 +36,33 @@ extern "C" {
 
 /* USER CODE END Private defines */
 
+void MX_USART1_UART_Init(void);
 void MX_USART2_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-__STATIC_INLINE void USART2_Redirected_test (void)
-{
-  //测试USART串口重定向的效果:
-  puts ("STM32F103CT86 Hello world!");
-  printf ("system frequency=%dMHz" , SystemCoreClock);
-  putchar ('\r');
-  putchar ('\n');
-  
-}
+
+
+  //定义全局变量缓冲区
+#define BUFFER_SIZE 256
+extern uint8_t USART2_Rx_Buffer[BUFFER_SIZE];
+extern bool idx;
+
+void my_USART2_DMA1_Config (void);
+
+void my_USART2_IDLE_DMA_callback (void);
+
+
+
+
+  __STATIC_INLINE void USART2_Redirected_test (void)
+  {
+    //测试USART串口重定向的效果:
+    puts ("STM32F103CT86 Hello world!");
+    printf ("system frequency=%dMHz" , SystemCoreClock);
+    putchar ('\r');
+    putchar ('\n');
+
+  }
 
 
 

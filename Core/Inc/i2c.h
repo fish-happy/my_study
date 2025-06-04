@@ -35,18 +35,19 @@ extern "C" {
 /* USER CODE BEGIN Private defines */
 
 
- 
- 
+
+
 
 /* USER CODE END Private defines */
 
+void MX_I2C1_Init(void);
 void MX_I2C2_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
 
 
-   /*I2C的普通传输*/
+     /*I2C的普通传输*/
 
   ErrorStatus my_I2C_ReceiveData (I2C_TypeDef * I2Cx , uint8_t * p_buf , uint32_t len , uint8_t slave_addr , uint8_t reg_addr);
 
@@ -64,11 +65,14 @@ void MX_I2C2_Init(void);
 
 
 
+  /*I2C的普通传输:EEPROM:at24c256*/
 
 
 
+  ErrorStatus my_I2C_At24c256_Write (I2C_TypeDef * I2Cx , uint8_t * p_data , uint32_t len , uint8_t slave_addr , uint16_t mem_addr);
 
 
+  ErrorStatus my_I2C_At24c256_Read (I2C_TypeDef * I2Cx , uint8_t * p_data , uint32_t len , uint8_t slave_addr , uint8_t mem_addr);
 
 
 

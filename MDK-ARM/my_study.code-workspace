@@ -24,9 +24,11 @@
             "gpio.h": "c",
             "usart.h": "c",
             "stm32f1xx_ll_rcc.h": "c",
-            "stm32f1xx_it.h": "c"
+            "stm32f1xx_it.h": "c",
+            "my_at24c256.h": "c",
+            "stm32f1xx_ll_bus.h": "c"
         },
-        "cortex-debug.variableUseNaturalFormat": false
+        "cortex-debug.variableUseNaturalFormat": true
     },
     "extensions": {}
 }
