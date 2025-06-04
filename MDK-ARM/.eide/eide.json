@@ -49,16 +49,13 @@
                     "path": "../Core/Src/stm32f1xx_it.c"
                   },
                   {
+                    "path": "../Core/Src/my_at24c16.c"
+                  },
+                  {
                     "path": "../Core/Src/my_LEDdebug.c"
                   },
                   {
                     "path": "../Core/Src/my_OLED091.c"
-                  },
-                  {
-                    "path": "../Core/Src/my_at24c16.c"
-                  },
-                  {
-                    "path": "../Core/Src/my_at24c256.c"
                   }
                 ],
                 "folders": []
@@ -277,8 +274,8 @@
           "../Drivers/STM32F1xx_HAL_Driver/Inc",
           "../Drivers/CMSIS/Device/ST/STM32F1xx/Include",
           "../Drivers/CMSIS/Include",
-          "RTE/_my_study",
-          "../Drivers/myDrivers"
+          "../Drivers/myDrivers",
+          "RTE/_my_study"
         ],
         "libList": [],
         "defineList": [

@@ -28,17 +28,17 @@ void my_OLED091_Init (void)
   };
 
   //利用初始化数组对OLED091进行初始化
-  my_I2C_TransmitData (I2C2 , OLED_Init_ARR , sizeof (OLED_Init_ARR) , 0x78 , 0x00);
+  my_I2C_TransmitData (I2C1 , OLED_Init_ARR , sizeof (OLED_Init_ARR) , 0x78 , 0x00);
 
   // //屏幕测试
   //512个字节全部写入0xff
   uint8_t OLED_test_ARR[512];
   memset (OLED_test_ARR , 0xff , sizeof (OLED_test_ARR));
-  my_I2C_TransmitData (I2C2 , OLED_test_ARR , sizeof (OLED_test_ARR) , 0x78 , 0x40);
+  my_I2C_TransmitData (I2C1 , OLED_test_ARR , sizeof (OLED_test_ARR) , 0x78 , 0x40);
   LL_mDelay (2000);
   // // //512个字节全部写入0
   memset (OLED_test_ARR , 0x00 , sizeof (OLED_test_ARR));
-  my_I2C_TransmitData (I2C2 , OLED_test_ARR , sizeof (OLED_test_ARR) , 0x78 , 0x40);
+  my_I2C_TransmitData (I2C1 , OLED_test_ARR , sizeof (OLED_test_ARR) , 0x78 , 0x40);
 
 }
 
@@ -47,7 +47,7 @@ ErrorStatus my_OLED091_SendOneCommand (uint8_t CMD)
 {
 
 
-  return my_I2C_TransmitData (I2C2 , &CMD , 1 , 0x78 , 0x00);
+  return my_I2C_TransmitData (I2C1 , &CMD , 1 , 0x78 , 0x00);
 }
 
 
@@ -55,7 +55,7 @@ ErrorStatus my_OLED091_SendOneByte (uint8_t Byte)
 {
 
 
-  return my_I2C_TransmitData (I2C2 , &Byte , 1 , 0x78 , 0x40);
+  return my_I2C_TransmitData (I2C1 , &Byte , 1 , 0x78 , 0x40);
 }
 
 
@@ -63,7 +63,7 @@ ErrorStatus my_OLED091_SendMultiBytes (uint8_t * P_Data , uint8_t len)
 {
 
 
-  return my_I2C_TransmitData (I2C2 , P_Data , len , 0x78 , 0x40);
+  return my_I2C_TransmitData (I2C1 , P_Data , len , 0x78 , 0x40);
 
 }
 

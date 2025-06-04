@@ -2,33 +2,13 @@
     "folders": [
         {
             "path": "."
-        },
-        {
-            "name": "my_study",
-            "path": ".."
         }
     ],
     "settings": {
         "files.associations": {
-            "i2c.h": "c",
             "main.h": "c",
-            "my_at24c16.h": "c",
-            "stm32f1xx_ll_dma.h": "c",
-            "dma.h": "c",
-            "stm32f1xx_ll_i2c.h": "c",
-            "my_oled091.h": "c",
-            "stm32f1xx_ll_utils.h": "c",
-            "stm32f1xx_ll_system.h": "c",
-            "my_leddebug.h": "c",
-            "spi.h": "c",
-            "gpio.h": "c",
-            "usart.h": "c",
-            "stm32f1xx_ll_rcc.h": "c",
-            "stm32f1xx_it.h": "c",
-            "my_at24c256.h": "c",
-            "stm32f1xx_ll_bus.h": "c"
-        },
-        "cortex-debug.variableUseNaturalFormat": true
+            "stm32f1xx_ll_dma.h": "c"
+        }
     },
     "extensions": {}
 }

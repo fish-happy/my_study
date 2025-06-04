@@ -7,6 +7,10 @@
 "my_study\spi.o"
 "my_study\usart.o"
 "my_study\stm32f1xx_it.o"
+"my_study\my_at24c16.o"
+"my_study\my_at24c256.o"
+"my_study\my_leddebug.o"
+"my_study\my_oled091.o"
 "my_study\stm32f1xx_ll_gpio.o"
 "my_study\stm32f1xx_ll_dma.o"
 "my_study\stm32f1xx_ll_i2c.o"
@@ -17,7 +21,7 @@
 "my_study\stm32f1xx_ll_pwr.o"
 "my_study\stm32f1xx_ll_usart.o"
 "my_study\system_stm32f1xx.o"
---strict --scatter "my_study\my_study.sct"
+--library_type=microlib --strict --scatter "my_study\my_study.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
 --list "my_study.map" -o my_study\my_study.axf

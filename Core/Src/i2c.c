@@ -468,6 +468,19 @@ ErrorStatus my_I2C_DMA_ReceiveData (I2C_TypeDef * I2Cx , DMA_TypeDef * DMAx , ui
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 //i2c的at24c256的传输
 
 
@@ -507,8 +520,19 @@ ErrorStatus my_I2C_At24c256_Write (I2C_TypeDef * I2Cx , uint8_t * p_data , uint3
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
 //at24c256的指定地址读取数据
-ErrorStatus my_I2C_At24c256_Read (I2C_TypeDef * I2Cx , uint8_t * p_data , uint32_t len , uint8_t slave_addr , uint8_t mem_addr)
+ErrorStatus my_I2C_At24c256_Read (I2C_TypeDef * I2Cx , uint8_t * p_data , uint32_t len , uint8_t slave_addr , uint16_t mem_addr)
 {
 
   //发送起始条件,并检测,超时则重启I2C,并返回错误

@@ -4,7 +4,7 @@
 //非DMA模式下写一个字节
 ErrorStatus my_AT24C16_WriteByte (uint8_t byte , uint8_t Page_addr , uint8_t mem_addr)
 {
-    ErrorStatus status = my_I2C_TransmitData (I2C2 , &byte , 1 , Page_addr , mem_addr);
+    ErrorStatus status = my_I2C_TransmitData (I2C1 , &byte , 1 , Page_addr , mem_addr);
     LL_mDelay (5);
     return status;
 }
@@ -13,7 +13,7 @@ ErrorStatus my_AT24C16_WriteByte (uint8_t byte , uint8_t Page_addr , uint8_t mem
 ErrorStatus my_AT24C16_WriteData (uint8_t * p_data , uint32_t len , uint8_t Page_addr , uint8_t mem_addr)
 {
 
-    ErrorStatus status = my_I2C_TransmitData (I2C2 , p_data , len , Page_addr , mem_addr);
+    ErrorStatus status = my_I2C_TransmitData (I2C1 , p_data , len , Page_addr , mem_addr);
     LL_mDelay (5);
     return status;
 }
@@ -21,7 +21,7 @@ ErrorStatus my_AT24C16_WriteData (uint8_t * p_data , uint32_t len , uint8_t Page
 //非DMA模式下读多个字节
 ErrorStatus my_AT24C16_RedaData (uint8_t * p_buf , uint32_t len , uint8_t Page_addr , uint8_t mem_addr)
 {
-    return my_I2C_ReceiveData (I2C2 , p_buf , len , Page_addr , mem_addr);
+    return my_I2C_ReceiveData (I2C1 , p_buf , len , Page_addr , mem_addr);
 }
 
 
@@ -49,7 +49,7 @@ ErrorStatus my_AT24C16_DMA_WriteData (uint8_t * p_data , uint32_t len , uint8_t 
     for (uint32_t i = 0; i < hex_size; i++)
     {
         uint8_t offset = (i * 0x10);
-        status = my_I2C_DMA_TransmitData (I2C2 , DMA1 , LL_DMA_CHANNEL_4 , p_data , 16 , Page_addr , mem_addr + offset);
+        status = my_I2C_DMA_TransmitData (I2C1 , DMA1 , LL_DMA_CHANNEL_4 , p_data , 16 , Page_addr , mem_addr + offset);
         LL_mDelay (5);
 
         if (i != 0 && i % 16 == 0)
@@ -82,7 +82,7 @@ ErrorStatus my_AT24C16_DMA_WriteData (uint8_t * p_data , uint32_t len , uint8_t 
 //DMA模式下读多个字节
 ErrorStatus my_AT24C16_DMA_RedaData (uint8_t * p_buf , uint32_t len , uint8_t Page_addr , uint8_t mem_addr)
 {
-    return my_I2C_DMA_ReceiveData (I2C2 , DMA1 , LL_DMA_CHANNEL_5 , p_buf , len , Page_addr , mem_addr);
+    return my_I2C_DMA_ReceiveData (I2C1 , DMA1 , LL_DMA_CHANNEL_5 , p_buf , len , Page_addr , mem_addr);
 }
 
 
