@@ -6,8 +6,7 @@
     ],
     "settings": {
         "files.associations": {
-            "main.h": "c",
-            "stm32f1xx_ll_dma.h": "c"
+            "main.h": "c"
         }
     },
     "extensions": {}

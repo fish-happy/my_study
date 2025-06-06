@@ -5,10 +5,14 @@
 #include  "main.h" 
 
 
-__STATIC_INLINE void my_Onboard_LED_msToggle (uint32_t Delay)
+__STATIC_INLINE void my_Onboard_LED_msToggle (uint32_t Delay , uint8_t count)
 {
-    LL_GPIO_TogglePin (GPIOC , LL_GPIO_PIN_13);
-    LL_mDelay (Delay);
+    for (uint8_t i = 0;i < count;i++)
+    {
+        LL_GPIO_TogglePin (GPIOC , LL_GPIO_PIN_13);
+        LL_mDelay (Delay);
+    }
+
 }
 
 

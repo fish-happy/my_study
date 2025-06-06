@@ -116,27 +116,7 @@ int main (void)
 
   //测试串口重定向 显示系统主频
   USART2_Redirected_test ( );
-
-
-
-  uint8_t test_data0[256] = { 0 };
-  uint8_t test_data1[256] = { 0 };
-
-  my_AT24C16_WriteData (test_data0 , 16 , AT24C16_DEVICE_PAGE_ADDR (5) , 0x00);
-
-
-  my_AT24C16_RedaData (test_data1 , 16 , AT24C16_DEVICE_PAGE_ADDR (5) , 0x00);
-
-  for (int i = 0 ; i < 256 ; i++)
-  {
-    printf ("test_data1[%d]=%02X\r\n " , i , test_data1[i]);
-  }
- 
- 
-
-
-
-
+  my_W25Q16M_Init ( );
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -201,26 +181,19 @@ void SystemClock_Config (void)
 void Error_Handler (void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  if ((I2C2->SR1 & I2C_SR1_TIMEOUT) || (I2C2->SR2 & LL_I2C_SR1_BERR))
-  {
-
-
-    //发送停止信号
-    LL_I2C_GenerateStopCondition (I2C2);
-    //重启I2C
-    LL_I2C_Disable (I2C2);
-    LL_I2C_Enable (I2C2);
-
-  }
-
-
 
   /* User can add his own implementation to report the HAL error return state */
   __disable_irq ( );
   while (1)
   {
-    my_Onboard_LED_msToggle (500);
-    LL_mDelay (1000);
+    //系统指示灯闪烁3秒,间隔500毫秒
+    my_Onboard_LED_msToggle (500 , 6);
+
+
+    
+    
+    //软重启
+    //NVIC_SystemReset ( );
 
   }
   /* USER CODE END Error_Handler_Debug */
